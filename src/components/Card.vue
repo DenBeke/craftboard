@@ -33,6 +33,7 @@ export default {
   methods: {
     endEditCard: function(e) {
       this.card.content = e.target.innerHTML
+      this.card.updated_at = new Date().toJSON()
       this.edit = false
     },
     startEditCard: function() {

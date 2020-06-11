@@ -87,8 +87,10 @@ export default {
       let id = createUUID()
 
       this.cards[type].cards.push({
-        "id": id,
-        "content": ""
+        id: id,
+        content: "",
+        created_at: new Date().toJSON(),
+        updated_at: new Date().toJSON()
       })
       this.$nextTick(function () {
         EventBus.$emit(AddNewCardEvent, id);
