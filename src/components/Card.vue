@@ -72,6 +72,7 @@ export default {
 
     .icon {
       font-size: 0.8em;
+      cursor: pointer;
     }
   }
 

@@ -137,6 +137,7 @@ html {
         .icon {
           color: teal;
           font-size: 1.5em;
+          cursor: pointer;
         }
       }
 
