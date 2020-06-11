@@ -1,28 +1,55 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="cards">
+      <Card :card="card" v-for="card in cards" :key="card.id"/>
+    </div><!-- .cards -->
+
+
+    <div>
+      <pre><code>{{ cards }}</code></pre>
+    </div>
+
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Card from './components/Card.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Card
+  },
+  data: function(){
+    return {
+      cards: [
+        {
+          "id": 1,
+          "content": "Lorem Ipsum"
+        },
+        {
+          "id": 2,
+          "content": "Foo bar"
+        }
+      ]
+    }
   }
 }
 </script>
 
-<style>
+<style lang="scss">
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+  .cards {
+    width: 33%;
+  }
+
 }
 </style>
