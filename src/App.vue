@@ -3,13 +3,21 @@
     <div class="cards">
 
 
-      <div class="col" :class="cardTypeKey" v-for="(cardTypeValue,cardTypeKey) in cards" :key="cardTypeKey">
-        <h3>{{cardTypeValue.name}}</h3>
-        <button @click="addNewCard(cardTypeKey)">Add new</button>
-        <draggable :list="cardTypeValue" group="cards" class="card-draggable">
+      <div class="column" :class="cardTypeKey" v-for="(cardTypeValue,cardTypeKey) in cards" :key="cardTypeKey">
+        
+        <div class="column-meta">
+          <h3>{{cardTypeValue.name}}</h3>
+        </div><!-- .column-meta -->
+        
+        <draggable :list="cardTypeValue.cards" group="cards" class="card-draggable">
           <Card :card="card" v-for="card in cardTypeValue.cards" :key="card.id" :ref="'card-ref-'+card.id" />
         </draggable>
-      </div><!-- .col -->
+
+        <div class="column-footer">
+          <font-awesome-icon class="icon" icon="plus-square" @click="addNewCard(cardTypeKey)" />
+        </div><!-- .column-footer -->
+
+      </div><!-- .column -->
 
       
     </div><!-- .cards -->
@@ -105,11 +113,25 @@ html {
     display: grid;
     grid-template-columns: 33.33% 33.33% 33.33%;
 
-    .col {
+    .column {
+
+      .column-meta {
+        text-align: center;
+      }
 
       .card-draggable {
         min-height: 50px;
-        height: 100%;
+        //height: 100%;
+      }
+
+      .column-footer {
+        text-align: center;
+        
+
+        .icon {
+          color: teal;
+          font-size: 1.5em;
+        }
       }
 
     }

@@ -1,7 +1,9 @@
 <template>
   <div class="card">
-    <button @click="startEditCard">Edit</button>
-    <div ref="cardContent" :contenteditable="edit" v-html="card.content" @blur="endEditCard"></div>
+    <div class="card-meta">
+      <font-awesome-icon class="icon" icon="pencil-alt" @click="startEditCard" />
+    </div><!-- .card-meta -->
+    <div class="card-content" ref="cardContent" :contenteditable="edit" v-html="card.content" @blur="endEditCard"></div>
   </div><!-- .card -->
 </template>
 
@@ -56,7 +58,30 @@ export default {
   border-radius: 2px;
   
   margin: 1em;
-  padding: 1em;
+  
+
+  .card-meta {
+    text-align: right;
+    height: 1em;
+    line-height: 1em;
+    padding: 0;
+    padding: 0.1em;
+    padding-right: 0.2em;
+    box-sizing: border-box;
+
+    .icon {
+      font-size: 0.8em;
+    }
+  }
+
+  .card-content {
+    padding: 1em;
+    padding-top: 0em;
+
+    &::after {
+      content: "\200B";
+    }
+  }
 }
 
 </style>
