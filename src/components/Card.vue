@@ -82,6 +82,14 @@ export default {
     &::after {
       content: "\200B";
     }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &:focus-within {
+    box-shadow: 0 0 5px red;
   }
 }
 
