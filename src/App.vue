@@ -1,7 +1,17 @@
 <template>
   <div id="app">
     <div class="cards">
-      <Card :card="card" v-for="card in cards" :key="card.id"/>
+
+
+      <div class="col" :class="cardTypeKey" v-for="(cardTypeValue,cardTypeKey) in cards" :key="cardTypeKey">
+        <h3>{{cardTypeKey}}</h3>
+        <button @click="addNewCard(cardTypeKey)">Add new</button>
+        <draggable :list="cardTypeValue" group="cards" class="card-draggable">
+          <Card :card="card" v-for="card in cardTypeValue" :key="card.id" :ref="'card-ref-'+card.id" />
+        </draggable>
+      </div><!-- .col -->
+
+      
     </div><!-- .cards -->
 
 
@@ -14,24 +24,58 @@
 
 <script>
 import Card from './components/Card.vue'
+import draggable from 'vuedraggable'
+
+import { EventBus, AddNewCardEvent } from './eventbus.js';
+import { createUUID } from './createUUID.js';
 
 export default {
   name: 'App',
   components: {
-    Card
+    Card,
+    draggable
   },
   data: function(){
     return {
-      cards: [
-        {
-          "id": 1,
-          "content": "Lorem Ipsum"
-        },
-        {
-          "id": 2,
-          "content": "Foo bar"
-        }
-      ]
+      cards: {
+        "todo": [
+          {
+            "id": "1",
+            "content": "I should do this"
+          },
+          {
+            "id": "2",
+            "content": "Foo bar"
+          }
+        ],
+        "in-progress": [
+          {
+            "id": "3",
+            "content": "Working on something"
+          },
+        ],
+        "done": [
+          {
+            "id": "4",
+            "content": "Finished this shit"
+          },
+        ]
+      }
+    }
+  },
+  methods: {
+    addNewCard: function(type) {
+      console.log(`[addNewCard] with type ${type}`)
+
+      let id = createUUID()
+
+      this.cards[type].push({
+        "id": id,
+        "content": ""
+      })
+      this.$nextTick(function () {
+        EventBus.$emit(AddNewCardEvent, id);
+      })
     }
   }
 }
@@ -48,7 +92,18 @@ html {
 #app {
 
   .cards {
-    width: 33%;
+
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+
+    .col {
+
+      .card-draggable {
+        min-height: 50px;
+        height: 100%;
+      }
+
+    }
   }
 
 }
