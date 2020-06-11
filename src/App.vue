@@ -4,10 +4,10 @@
 
 
       <div class="col" :class="cardTypeKey" v-for="(cardTypeValue,cardTypeKey) in cards" :key="cardTypeKey">
-        <h3>{{cardTypeKey}}</h3>
+        <h3>{{cardTypeValue.name}}</h3>
         <button @click="addNewCard(cardTypeKey)">Add new</button>
         <draggable :list="cardTypeValue" group="cards" class="card-draggable">
-          <Card :card="card" v-for="card in cardTypeValue" :key="card.id" :ref="'card-ref-'+card.id" />
+          <Card :card="card" v-for="card in cardTypeValue.cards" :key="card.id" :ref="'card-ref-'+card.id" />
         </draggable>
       </div><!-- .col -->
 
@@ -38,28 +38,37 @@ export default {
   data: function(){
     return {
       cards: {
-        "todo": [
-          {
-            "id": "1",
-            "content": "I should do this"
-          },
-          {
-            "id": "2",
-            "content": "Foo bar"
-          }
-        ],
-        "in-progress": [
-          {
-            "id": "3",
-            "content": "Working on something"
-          },
-        ],
-        "done": [
-          {
-            "id": "4",
-            "content": "Finished this shit"
-          },
-        ]
+        "todo": {
+          name: "Todo",
+          cards: [
+            {
+              id: "1",
+              content: "I should do this"
+            },
+            {
+              id: "2",
+              content: "Foo bar"
+            }
+          ],
+        },
+        "in-progress": {
+          name: "In Progress",
+          cards: [
+            {
+              id: "3",
+              content: "Working on something"
+            },
+          ],
+        },
+        "done": {
+          name: "Done",
+          cards: [
+            {
+              id: "4",
+              content: "Finished this shit"
+            },
+          ]
+        }
       }
     }
   },
@@ -69,7 +78,7 @@ export default {
 
       let id = createUUID()
 
-      this.cards[type].push({
+      this.cards[type].cards.push({
         "id": id,
         "content": ""
       })
