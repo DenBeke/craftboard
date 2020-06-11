@@ -100,10 +100,14 @@ export default {
 
 <style lang="scss">
 
+@import url('./assets/nunito-sans/nunito-sans.scss');
+
 body,
 html {
   margin: 0;
   padding: 0;
+
+  font-family: 'Nunito Sans';
 }
 
 #app {
