@@ -25,6 +25,8 @@ func constructHTTPError(err error) httpError {
 func Serve(config Config) {
 	e := echo.New()
 
+	e.HideBanner = true
+
 	nekoLog.Logger().SetOutput(os.Stdout)
 	nekoLog.Logger().SetLevel(echoLog.INFO)
 	// nekoLog.Logger().SetFormatter(&logrus.JSONFormatter{
@@ -67,6 +69,8 @@ func Serve(config Config) {
 		}
 		return c.JSON(http.StatusOK, nil)
 	})
+
+	log.Println("Starting CraftBoard...")
 
 	e.Logger.Fatal(e.Start(":1234"))
 }
