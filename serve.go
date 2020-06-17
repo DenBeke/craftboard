@@ -38,9 +38,7 @@ func Serve(config Config) {
 		AllowOrigins: []string{"*"},
 	}))
 
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "🍻 Craftboard")
-	})
+	e.Static("/", "app/dist/")
 
 	g := e.Group("/api/v1")
 	g.GET("/board", func(c echo.Context) error {
