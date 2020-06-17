@@ -34,7 +34,7 @@
 import Card from './components/Card.vue'
 import draggable from 'vuedraggable'
 
-import { EventBus, AddNewCardEvent, UpdatedCardEvent } from './eventbus.js';
+import { EventBus, AddNewCardEvent, UpdatedCardEvent, DeleteCardEvent } from './eventbus.js';
 import { createUUID } from './createUUID.js';
 
 export default {
@@ -88,6 +88,10 @@ export default {
       console.log(UpdatedCardEvent + " " + cardID)
       self.saveBoard()
     })
+    EventBus.$on(DeleteCardEvent, function(cardID){
+      console.log(DeleteCardEvent + " " + cardID)
+      self.deleteCardFromBoard(cardID)
+    })
 
     // Get the initial board
     self.getBoard()
@@ -108,7 +112,7 @@ export default {
       this.$nextTick(function () {
         EventBus.$emit(AddNewCardEvent, id);
       })
-      
+
     },
     changedBoardByDragDrop: function() {
       EventBus.$emit(UpdatedCardEvent);
@@ -139,6 +143,29 @@ export default {
       .catch(function (error) {
         console.log(error);
       });
+    },
+    deleteCardFromBoard: function(cardID) {
+      
+      
+      // loop through columns
+      for (var colKey in this.cards) {
+
+          var toDelete = undefined
+
+          // iterate over cards in column to find index of card to delete
+          this.cards[colKey].cards.forEach(function (item, index) {
+            if(item.id == cardID) {
+              toDelete = index
+            }
+          });
+
+          if (toDelete !== undefined) {
+            this.cards[colKey].cards.splice(toDelete, 1)
+          }
+ 
+      }
+
+      this.saveBoard()
     }
   }
 }

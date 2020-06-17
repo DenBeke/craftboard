@@ -2,6 +2,7 @@
   <div class="card">
     <div class="card-meta">
       <font-awesome-icon class="icon" icon="pencil-alt" @click="startEditCard" />
+      <font-awesome-icon class="icon" icon="trash" @click="deleteCard" />  
     </div><!-- .card-meta -->
     <div class="card-content" ref="cardContent" :contenteditable="edit" v-html="card.content" @blur="endEditCard"></div>
   </div><!-- .card -->
@@ -9,7 +10,7 @@
 
 <script>
 
-import { EventBus, AddNewCardEvent, UpdatedCardEvent } from '../eventbus.js';
+import { EventBus, AddNewCardEvent, UpdatedCardEvent, DeleteCardEvent } from '../eventbus.js';
 
 
 export default {
@@ -46,6 +47,13 @@ export default {
       setTimeout(function() {
         self.$refs["cardContent"].focus()
       }, 0);
+    },
+    deleteCard: function() {
+      if (confirm("Do you really want to delete this card?") === true) { 
+          EventBus.$emit(DeleteCardEvent, this.card.id)
+      } else { 
+          // ignore
+      } 
     }
   }
 }
@@ -73,6 +81,7 @@ export default {
 
     .icon {
       font-size: 0.8em;
+      padding-left: 0.2em;
       cursor: pointer;
     }
   }

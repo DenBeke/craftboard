@@ -15,10 +15,12 @@ Vue.use(VueAxios, axios)
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faPencilAlt)
 library.add(faPlusSquare)
+library.add(faTrash)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
