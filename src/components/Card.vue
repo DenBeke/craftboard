@@ -9,7 +9,7 @@
 
 <script>
 
-import { EventBus, AddNewCardEvent } from '../eventbus.js';
+import { EventBus, AddNewCardEvent, UpdatedCardEvent } from '../eventbus.js';
 
 
 export default {
@@ -35,6 +35,7 @@ export default {
       this.card.content = e.target.innerHTML
       this.card.updated_at = new Date().toJSON()
       this.edit = false
+      EventBus.$emit(UpdatedCardEvent, this.card.id)
     },
     startEditCard: function() {
       console.log("click")

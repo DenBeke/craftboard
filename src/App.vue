@@ -9,7 +9,7 @@
           <h3>{{cardTypeValue.name}}</h3>
         </div><!-- .column-meta -->
         
-        <draggable :list="cardTypeValue.cards" group="cards" class="card-draggable">
+        <draggable :list="cardTypeValue.cards" group="cards" class="card-draggable" @change="changedBoardByDragDrop">
           <Card :card="card" v-for="card in cardTypeValue.cards" :key="card.id" :ref="'card-ref-'+card.id" />
         </draggable>
 
@@ -34,7 +34,7 @@
 import Card from './components/Card.vue'
 import draggable from 'vuedraggable'
 
-import { EventBus, AddNewCardEvent } from './eventbus.js';
+import { EventBus, AddNewCardEvent, UpdatedCardEvent } from './eventbus.js';
 import { createUUID } from './createUUID.js';
 
 export default {
@@ -80,6 +80,19 @@ export default {
       }
     }
   },
+  created: function() {
+    var self = this
+
+    // Listen for board updates
+    EventBus.$on(UpdatedCardEvent, function(cardID){
+      console.log(UpdatedCardEvent + " " + cardID)
+      self.saveBoard()
+    })
+
+    // Get the initial board
+    self.getBoard()
+
+  },
   methods: {
     addNewCard: function(type) {
       console.log(`[addNewCard] with type ${type}`)
@@ -95,6 +108,37 @@ export default {
       this.$nextTick(function () {
         EventBus.$emit(AddNewCardEvent, id);
       })
+      
+    },
+    changedBoardByDragDrop: function() {
+      EventBus.$emit(UpdatedCardEvent);
+    },
+    saveBoard: function() {
+
+      var self = this
+
+      self.axios.post('http://localhost:1234/api/v1/board',
+        self.cards
+      )
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    },
+    getBoard: function() {
+
+      var self = this
+
+      self.axios.get('http://localhost:1234/api/v1/board')
+      .then(function (response) {
+        self.cards = response.data
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     }
   }
 }
