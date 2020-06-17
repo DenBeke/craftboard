@@ -1,0 +1,10 @@
+version: "3"
+services:
+  craftboard:
+    container_name: craftboard
+    image: denbeke/craftboard
+    # build: .
+    ports:
+      - "1234:1234"
+    volumes: 
+      - ./board.json:/craftboard/board.json
