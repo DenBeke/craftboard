@@ -3,8 +3,13 @@ package craftboard
 import (
 	"encoding/json"
 	"net/http"
+	"os"
 
 	"github.com/labstack/echo/v4"
+	//"github.com/labstack/echo/v4/middleware"
+	echoLog "github.com/labstack/gommon/log"
+	middleware "github.com/neko-neko/echo-logrus/v2"
+	nekoLog "github.com/neko-neko/echo-logrus/v2/log"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -19,6 +24,15 @@ func constructHTTPError(err error) httpError {
 // Serve craftboard server
 func Serve(config Config) {
 	e := echo.New()
+
+	nekoLog.Logger().SetOutput(os.Stdout)
+	nekoLog.Logger().SetLevel(echoLog.INFO)
+	// nekoLog.Logger().SetFormatter(&logrus.JSONFormatter{
+	// 	TimestampFormat: time.RFC3339,
+	// })
+	e.Logger = nekoLog.Logger()
+	e.Use(middleware.Logger())
+
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "🍻 Craftboard")
 	})
