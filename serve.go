@@ -6,9 +6,9 @@ import (
 	"os"
 
 	"github.com/labstack/echo/v4"
-	//"github.com/labstack/echo/v4/middleware"
+	"github.com/labstack/echo/v4/middleware"
 	echoLog "github.com/labstack/gommon/log"
-	middleware "github.com/neko-neko/echo-logrus/v2"
+	logMiddleware "github.com/neko-neko/echo-logrus/v2"
 	nekoLog "github.com/neko-neko/echo-logrus/v2/log"
 	log "github.com/sirupsen/logrus"
 )
@@ -31,7 +31,12 @@ func Serve(config Config) {
 	// 	TimestampFormat: time.RFC3339,
 	// })
 	e.Logger = nekoLog.Logger()
-	e.Use(middleware.Logger())
+	e.Use(logMiddleware.Logger())
+
+	// Cors
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+	}))
 
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "🍻 Craftboard")
