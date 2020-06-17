@@ -1,41 +1,14 @@
 {
     "0-todo": {
-        "cards": [
-            {
-                "content": "I should do this!",
-                "created_at": "2020-06-17T15:19:52.147Z",
-                "id": "acbba573-340b-4b74-b3a2-6937e47b837b",
-                "updated_at": "2020-06-17T15:19:57.861Z"
-            },
-            {
-                "content": "Foo bar",
-                "created_at": "2020-06-17T15:19:59.133Z",
-                "id": "5f4be2ff-65dc-4f8c-a228-561994714b31",
-                "updated_at": "2020-06-17T15:20:02.441Z"
-            }
-        ],
+        "cards": [],
         "name": "Todo"
     },
     "1-in-progress": {
-        "cards": [
-            {
-                "content": "I'm working on this!",
-                "created_at": "2020-06-17T15:19:46.871Z",
-                "id": "efad95f5-3335-46f2-afa2-f569d866b605",
-                "updated_at": "2020-06-17T15:19:51.190Z"
-            }
-        ],
+        "cards": [],
         "name": "In Progress"
     },
     "2-done": {
-        "cards": [
-            {
-                "content": "Finished this shit",
-                "created_at": "2020-06-17T15:19:42.776Z",
-                "id": "daa53448-4b68-4f6f-b12b-9afdf74fab70",
-                "updated_at": "2020-06-17T15:19:46.152Z"
-            }
-        ],
+        "cards": [],
         "name": "Done"
     }
 }
