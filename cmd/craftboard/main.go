@@ -18,7 +18,7 @@ func copyBoardIfNotExists(file string) error {
 		return nil
 	}
 
-	log.Printf("%q doesn't exist. Copying the sample board file now...")
+	log.Printf("%q doesn't exist. Copying the sample board file now...", file)
 
 	input, err := ioutil.ReadFile(sampleBoardFile)
 	if err != nil {
@@ -43,7 +43,7 @@ func main() {
 
 	err := copyBoardIfNotExists(config.BoardFile)
 	if err != nil {
-		log.Fatalln("couldn't create board file")
+		log.Fatalln("couldn't create board file: %v", err)
 	}
 
 	craftboard.Serve(config)

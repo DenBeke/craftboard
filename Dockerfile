@@ -23,8 +23,15 @@ FROM alpine:latest
 
 WORKDIR /
 
-COPY --from=front /app/dist /app/dist
-COPY --from=back /craftboard /
+COPY --from=front /app/dist /craftboard/app/dist
+COPY --from=back /craftboard /craftboard/
+COPY board_sample.json /craftboard/board_sample.json
+
+WORKDIR /craftboard
 
 RUN chmod +x /craftboard
+
+EXPOSE 1234
+VOLUME ["/craftboard"]
+
 CMD ["./craftboard"]
